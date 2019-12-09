@@ -1,28 +1,56 @@
 <template>
     <div class="standard-page">
         <div class="login-form">
-            <h5>Sign in to your account</h5>
-
             <div class="form-group">
                 <label for="email" class="label">Email</label>
-                <input type="email" id="email" class="form-control form-control-lg" />
+                <input type="email" id="email" v-model="credentials.email" class="form-control form-control-lg" />
             </div>
 
             <div class="form-group">
                 <label for="password" class="label">Password</label>
-                <input type="password" id="password" class="form-control form-control-lg" />
+                <input type="password" id="password" v-model="credentials.password" class="form-control form-control-lg" />
             </div>
 
             <div class="form-group">
-                <button class="btn btn-lg btn-success">Sign in</button>
+                <button class="btn btn-lg btn-outline-success" :disabled="!isFormFilled" @click="signIn">Sign in</button>
+            </div>
+
+            <div class="form-group" v-if="errorMessage">
+                <div class="text-danger">
+                    {{ errorMessage }}
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-export default {
+import login from '@/services/auth/login'
 
+export default {
+    data: () => ({ credentials: { email: '', password: '' }, errorMessage: null }),
+    methods: {
+        signIn() {
+            this.errorMessage = null;
+
+            if (!this.credentials.email) return this.errorMessage = 'Enter an email';
+            if (!this.credentials.password) return this.errorMessage = 'Enter a password';
+
+            login({ ...this.credentials }) 
+                .then(token => {
+                    this.$store.dispatch('authSetToken', token);
+                    this.$router.push('/');
+                })
+                .catch(e => {
+                    this.errorMessage = 'The credentials are incorrect';
+                })
+        }
+    },
+    computed: {
+        isFormFilled() {
+            return this.credentials.email.length > 0 && this.credentials.password.length > 0;
+        }
+    }
 }
 </script>
 
