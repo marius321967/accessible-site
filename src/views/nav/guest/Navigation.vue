@@ -24,10 +24,30 @@
                         <font-awesome-icon icon="wheelchair" />
                     </a>
                 </li>
-                <li class="nav-item active">
+                <li class="nav-item active" v-if="!authToken">
                     <router-link class="nav-link" to="login">
                         Login
                     </router-link>
+                </li>
+                <li class="nav-item active" v-if="!authToken">
+                    <router-link class="nav-link" to="register">
+                        Register
+                    </router-link>
+                </li>
+                <li class="nav-item active" v-if="authProfile && authProfile.is_admin == true">
+                    <router-link to="/admin" class="nav-link">
+                        Administration
+                    </router-link>
+                </li>
+                <li class="nav-item active" v-if="authProfile">
+                    <a href="#" class="nav-link">
+                        {{ authProfile.email }}
+                    </a>
+                </li>
+                <li class="nav-item active" v-if="authToken">
+                    <a href="#" class="nav-link" @click="logout">
+                        Logout
+                    </a>
                 </li>
             </ul>
         </div>
@@ -36,9 +56,19 @@
 
 <script>
 import logo from '@/assets/logo.png'
+import { mapGetters } from 'vuex'
 
 export default {
-    data: () => ({ logo })
+    data: () => ({ logo }),
+
+    computed: {
+        ...mapGetters([ 'authToken', 'authProfile' ])
+    },
+    methods: {
+        logout() {
+            this.$store.dispatch('authRemoveToken');
+        }
+    }
 }
 </script>
 
