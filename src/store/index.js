@@ -11,12 +11,14 @@ export default new Vuex.Store({
             token: null,
             profile: null,
         },
-        popoverElement: null
+        popoverElement: null,
+        accessibleMode: false,
     },
     getters: {
         authToken: state => (state.auth.token),
         authProfile: state => (state.auth.profile),
-        popoverElement: state => (state.popoverElement)
+        popoverElement: state => (state.popoverElement),
+        accessibleMode: state => (state.accessibleMode),
     },
     mutations: {
         AUTH_SET_TOKEN(state, token) {
@@ -33,6 +35,9 @@ export default new Vuex.Store({
         },
         POPOVER_SET_ELEMENT(state, element) {
             state.popoverElement = element;
+        },
+        SET_ACCESSIBLE_MODE(state, value) {
+            state.accessibleMode = value;
         }
     },
     actions: {
@@ -79,6 +84,10 @@ export default new Vuex.Store({
         },
         authRemoveProfile({ commit }) {
             commit('AUTH_REMOVE_PROFILE');
+        },
+        toggleAccessibleMode({ commit, state }) {
+            const currentState = state.accessibleMode;
+            commit('SET_ACCESSIBLE_MODE', !currentState);
         }
     },
     modules: {}
