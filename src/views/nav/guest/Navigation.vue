@@ -13,14 +13,16 @@
                 <li class="nav-item active">
                     <router-link class="nav-link" to="/">Home</router-link>
                 </li>
-                <li class="nav-item">
-                    <router-link class="nav-link" to="/">Explore</router-link>
+                <li class="nav-item" v-for="category in categories" v-bind:key="category._id">
+                    <router-link class="nav-link" :to="'/categories/' + category._id">
+                        {{ category.name }}
+                    </router-link>
                 </li>
             </ul>
             
             <ul class="navbar-nav">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="#" @click="toggleAccessibleMode">
                         <font-awesome-icon icon="wheelchair" />
                     </a>
                 </li>
@@ -56,10 +58,11 @@
 
 <script>
 import logo from '@/assets/logo.png'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
+import get_all_categories from '@/services/api/categories/get_all'
 
 export default {
-    data: () => ({ logo }),
+    data: () => ({ logo, categories: [] }),
 
     computed: {
         ...mapGetters([ 'authToken', 'authProfile' ])
@@ -67,7 +70,12 @@ export default {
     methods: {
         logout() {
             this.$store.dispatch('authRemoveToken');
-        }
+        },
+        ...mapActions(['toggleAccessibleMode'])
+    },
+
+    created() {
+        get_all_categories().then(categories => this.categories = categories);
     }
 }
 </script>
