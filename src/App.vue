@@ -37,10 +37,11 @@ export default {
     },
 
     computed: { 
-        ...mapGetters(['popoverElement', 'accessibleMode']),
+        ...mapGetters(['popoverElement', 'accessibleMode', 'fontSizeLevel']),
         appClasses() {
             const c = [];
             if (this.accessibleMode) c.push('accessible');
+            if (this.fontSizeLevel) c.push('font-size-level-' + this.fontSizeLevel); // See accessible.scss
             return c;
         }
     }
@@ -51,10 +52,6 @@ export default {
 @import 'bootstrap';
 @import '@/assets/accessible';
 
-body {
-    font-weight: 500;
-}
-
 .standard-page {
     @extend .container;
     margin-top: 1rem;
@@ -63,4 +60,5 @@ body {
 .router-link-active {
     @extend .active;
 }
+
 </style>
