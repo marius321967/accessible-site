@@ -5,7 +5,7 @@
         <div class="product-images-container row">
             <div class="col-md-3" v-for="image in images" v-bind:key="image._id">
                 <div class="product-image">
-                    <img :src="config.api_root + '/products/' + product._id + '/images/' + image._id + '/file'" />
+                    <img :src="config.api_root + '/products/' + productId + '/images/' + image._id + '/file'" />
 
                     <font-awesome-icon icon="wheelchair" class="accessible-flag" v-if="image.accessible" />
                     
@@ -44,7 +44,10 @@ import delete_product_image from '@/services/api/products/delete_image'
 import config from '@/config.json'
 
 export default {
-    props: { product: { required: true, type: Object } },
+    props: { 
+        productId: { required: true, type: String },
+        product: { required: true, type: Object } 
+    },
 
     data: () => ({ 
         uploadForm: { file: null, accessible: false }, 
@@ -63,15 +66,13 @@ export default {
 
             if (!this.uploadForm.file) return this.error = 'Select a file to upload';
 
-            upload_product_image(this.product._id, this.uploadForm.file, this.uploadForm.accessible).then(this.loadImagesList);
+            upload_product_image(this.productId, this.uploadForm.file, this.uploadForm.accessible).then(this.loadImagesList);
         },
         deleteImage(imageId) {
-            delete_product_image(this.product._id, imageId).then(this.loadImagesList);
+            delete_product_image(this.productId, imageId).then(this.loadImagesList);
         },
         loadImagesList() {
-            console.log('loading list');
-            
-            get_all_product_images(this.product._id).then(images => this.images = images);
+            get_all_product_images(this.productId).then(images => this.images = images);
         }
     },
 
