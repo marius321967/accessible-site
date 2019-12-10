@@ -1,0 +1,17 @@
+/* Special styling rules for accessible mode */
+.accessible {
+    label.label {
+        text-transform: uppercase;
+    }
+
+    .form-group {
+        margin-bottom: 2rem;
+    }
+
+    .primary-links .nav-item .nav-link {
+        text-transform: uppercase;
+        letter-spacing: 0.15rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}
