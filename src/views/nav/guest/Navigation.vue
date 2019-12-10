@@ -21,11 +21,6 @@
             </ul>
             
             <ul class="navbar-nav">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#" @click="toggleAccessibleMode">
-                        <font-awesome-icon icon="wheelchair" />
-                    </a>
-                </li>
                 <li class="nav-item active" v-if="!authToken">
                     <router-link class="nav-link" to="login">
                         Login
@@ -51,6 +46,22 @@
                         Logout
                     </a>
                 </li>
+                
+                <li class="nav-item active" v-if="accessibleMode">
+                    <a class="nav-link" href="#" @click="decreaseFontSize">
+                        -
+                    </a>
+                </li>
+                <li class="nav-item active" v-if="accessibleMode">
+                    <a class="nav-link" href="#" @click="increaseFontSize">
+                        +
+                    </a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#" @click="toggleAccessibleMode">
+                        <font-awesome-icon icon="wheelchair" />
+                    </a>
+                </li>
             </ul>
         </div>
     </nav>
@@ -65,13 +76,13 @@ export default {
     data: () => ({ logo, categories: [] }),
 
     computed: {
-        ...mapGetters([ 'authToken', 'authProfile' ])
+        ...mapGetters([ 'authToken', 'authProfile', 'accessibleMode' ])
     },
     methods: {
         logout() {
             this.$store.dispatch('authRemoveToken');
         },
-        ...mapActions(['toggleAccessibleMode'])
+        ...mapActions(['toggleAccessibleMode', 'decreaseFontSize', 'increaseFontSize'])
     },
 
     created() {

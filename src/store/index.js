@@ -13,12 +13,14 @@ export default new Vuex.Store({
         },
         popoverElement: null,
         accessibleMode: false,
+        fontSizeLevel: null
     },
     getters: {
         authToken: state => (state.auth.token),
         authProfile: state => (state.auth.profile),
         popoverElement: state => (state.popoverElement),
         accessibleMode: state => (state.accessibleMode),
+        fontSizeLevel: state => (state.fontSizeLevel),
     },
     mutations: {
         AUTH_SET_TOKEN(state, token) {
@@ -38,6 +40,9 @@ export default new Vuex.Store({
         },
         SET_ACCESSIBLE_MODE(state, value) {
             state.accessibleMode = value;
+        },
+        SET_FONT_SIZE_LEVEL(state, value) {
+            state.fontSizeLevel = value;
         }
     },
     actions: {
@@ -88,6 +93,16 @@ export default new Vuex.Store({
         toggleAccessibleMode({ commit, state }) {
             const currentState = state.accessibleMode;
             commit('SET_ACCESSIBLE_MODE', !currentState);
+
+            if (!currentState == false) commit('SET_FONT_SIZE_LEVEL', null);
+            else                        commit('SET_FONT_SIZE_LEVEL', 1);
+        },
+
+        decreaseFontSize({ commit, state }) {
+            if (state.fontSizeLevel > 1) commit('SET_FONT_SIZE_LEVEL', state.fontSizeLevel - 1);
+        },
+        increaseFontSize({ commit, state }) {
+            if (state.fontSizeLevel < 5) commit('SET_FONT_SIZE_LEVEL', state.fontSizeLevel + 1);
         }
     },
     modules: {}

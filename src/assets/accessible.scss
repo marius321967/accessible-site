@@ -1,5 +1,13 @@
 /* Special styling rules for accessible mode */
 .accessible {
+    &.font-size-level-1 { font-size: 105%; }
+    &.font-size-level-2 { font-size: 110%; }
+    &.font-size-level-3 { font-size: 135%; }
+    &.font-size-level-4 { font-size: 150%; }
+    &.font-size-level-5 { font-size: 170%; }
+    font-weight: 500;
+    
+
     label.label {
         text-transform: uppercase;
     }
@@ -14,4 +22,6 @@
         padding-left: 1rem;
         padding-right: 1rem;
     }
+
+    .btn { text-transform: uppercase; }
 }
