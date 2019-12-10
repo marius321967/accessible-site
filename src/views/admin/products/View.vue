@@ -15,7 +15,14 @@
                     </div>
                     
                     <div class="form-group">
-                        <label>Name</label>
+                        <label>Category</label>
+                        <select class="form-control form-control-sm" v-model="product.category_id">
+                            <option :value="category._id" v-for="category in categories" v-bind:key="category._id">{{ category.name }}</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Price</label>
                         <div class="input-group input-group-sm">
                             <input type="number" class="form-control form-control-sm" min="0" step="0.01" v-model.number="product.price" />
                             <div class="input-group-append">
@@ -35,7 +42,7 @@
              </div>
 
             <div class="col-md-8">
-                <product-images-form :product="product"></product-images-form>
+                <product-images-form :product-id="id" :product="product"></product-images-form>
             </div>
         </div>
     </div>
@@ -43,6 +50,8 @@
 
 <script>
 import get_product_by_id from '@/services/api/products/get_by_id'
+import update_product from '@/services/api/products/update'
+import get_all_categories from '@/services/api/categories/get_all'
 import ProductImagesForm from './ProductImagesForm'
 
 export default {
@@ -52,14 +61,21 @@ export default {
     data: () => ({
         product: null,
         error: null,
+        categories: [],
     }),
 
     methods: {
-        save() {},
+        save() {
+            update_product(this.id, this.product);
+        },
     },
 
     mounted() {
-        get_product_by_id(this.id).then(product => this.product = product);
+        get_product_by_id(this.id).then(product => {
+            delete product._id;
+            this.product = product;
+        });
+        get_all_categories().then(categories => this.categories = categories);
     }
 }
 </script>
