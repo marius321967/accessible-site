@@ -37,8 +37,14 @@ export default {
     data: () => ({ category: null, products: [] }),
 
     mounted() {
-        get_category_by_id(this.id).then(c => this.category = c);
-        get_products_by_category(this.id).then(p => this.products = p);
+        get_category_by_id(this.id).then(c => {
+            this.category = c;
+            this.$speak(c.name);
+        });
+        get_products_by_category(this.id).then(p => {
+            this.products = p;
+            if (p.length == 0) this.$speak('No products were found in this category.');
+        })
     }
 }
 </script>
