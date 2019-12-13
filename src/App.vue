@@ -1,6 +1,6 @@
 <template>
     <div :class="appClasses">
-        <router-view />
+        <router-view :key="$route.fullPath" />
         
         <b-popover :target="popoverElement" v-if="accessibleMode && popoverElement" :show="true" triggers="manual" placement="bottom">
             <template v-slot:title>Help</template>
