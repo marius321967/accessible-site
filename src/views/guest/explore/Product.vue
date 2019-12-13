@@ -24,7 +24,9 @@
                 </div>
 
                 <div class="cart-options-container">
-                    <button class="btn btn-primary">Add to cart</button>
+                    <button :class="cartButtonClasses" @click="addToCart" :disabled="cartItemAdded">
+                        {{ cartItemAdded ? 'Added' : 'Add to cart' }}
+                    </button>
                 </div>
 
                 <hr>
@@ -49,6 +51,7 @@
 import aic from './product/AccessibleImagesCarousel'
 import nic from './product/NonaccessibleImagesCarousel'
 import get_product_by_id from '@/services/api/products/get_by_id'
+import add_cart_item from "@/services/api/cart_items/add"
 
 export default {
     props: { id: { required: true, type: String } },
@@ -56,10 +59,23 @@ export default {
 
     data: () => ({
         product: null,
+        cartItemAdded: false,
     }),
 
     mounted() {
         get_product_by_id(this.id).then(p => this.product = p);
+    },
+
+    methods: {
+        addToCart() {
+            add_cart_item({ product_id: this.id, amount: 1 }).then(_ => this.cartItemAdded = true);
+        }
+    },
+
+    computed: {
+        cartButtonClasses() {
+            return [ 'btn', (this.cartItemAdded ? 'btn-success' : 'btn-primary') ]
+        }
     }
 }
 </script>
