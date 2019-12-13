@@ -96,6 +96,7 @@ export default new Vuex.Store({
 
             if (!currentState == false) commit('SET_FONT_SIZE_LEVEL', null);
             else                        commit('SET_FONT_SIZE_LEVEL', 1);
+            return !currentState;
         },
 
         decreaseFontSize({ commit, state }) {
