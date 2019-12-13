@@ -4,6 +4,8 @@ import Login from '@/views/guest/Login'
 import Register from '@/views/guest/Register'
 import Category from '@/views/guest/explore/Category'
 import Product from '@/views/guest/explore/Product'
+import Cart from '@/views/user/Cart'
+import Checkout from '@/views/user/Checkout'
 
 export default { 
     path: '/', 
@@ -14,5 +16,7 @@ export default {
         { path: 'register', component: Register },
         { path: 'categories/:id', component: Category, props: true },
         { path: 'products/:id', component: Product, props: true },
+        { path: 'cart', component: Cart },
+        { path: 'checkout', component: Checkout }
     ]
 }

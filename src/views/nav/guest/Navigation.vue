@@ -22,18 +22,23 @@
             
             <ul class="navbar-nav">
                 <li class="nav-item active" v-if="!authToken">
-                    <router-link class="nav-link" to="login">
+                    <router-link class="nav-link" to="/login">
                         Login
                     </router-link>
                 </li>
                 <li class="nav-item active" v-if="!authToken">
-                    <router-link class="nav-link" to="register">
+                    <router-link class="nav-link" to="/register">
                         Register
                     </router-link>
                 </li>
                 <li class="nav-item active" v-if="authProfile && authProfile.is_admin == true">
                     <router-link to="/admin" class="nav-link">
                         Administration
+                    </router-link>
+                </li>
+                <li class="nav-item active" v-if="authProfile">
+                    <router-link to="/cart" class="nav-link">
+                        Cart
                     </router-link>
                 </li>
                 <li class="nav-item active" v-if="authProfile">
@@ -58,7 +63,7 @@
                     </a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="#" @click="toggleAccessibleMode">
+                    <a class="nav-link" href="#" @click="toggleAccessibleModeSpeak">
                         <font-awesome-icon icon="wheelchair" />
                     </a>
                 </li>
@@ -82,7 +87,13 @@ export default {
         logout() {
             this.$store.dispatch('authRemoveToken');
         },
-        ...mapActions(['toggleAccessibleMode', 'decreaseFontSize', 'increaseFontSize'])
+        ...mapActions(['toggleAccessibleMode', 'decreaseFontSize', 'increaseFontSize']),
+        toggleAccessibleModeSpeak() {
+            this.toggleAccessibleMode() 
+            .then(newState => {
+                if (newState == true) this.$speak('Accessibility mode enabled');
+            });
+        }
     },
 
     created() {
