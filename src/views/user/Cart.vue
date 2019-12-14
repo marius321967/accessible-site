@@ -3,7 +3,7 @@
         <h4>Cart</h4>
 
         <div class="row" v-if="items.length > 0">
-            <div class="col-md-6">
+            <div class="col-md-10">
                 <div class="form-group">
                     <ul class="list-group">
                         <cart-item  
