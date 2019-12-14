@@ -1,7 +1,7 @@
 import client from '../client'
 
 /**
- * @returns {Promise} Resolves with category objects array.
+ * @returns {Promise} Resolves with cart item objects array.
  */
 export default () => {
     return client.get('/cart')
