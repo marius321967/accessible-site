@@ -5,18 +5,7 @@
         <hr>
 
         <div class="row" v-if="products && products.length > 0">
-            <div class="col-md-3 category-product-container" v-for="product in products" v-bind:key=product._id>
-                <router-link tag="div" class="product-inner" :to="'/products/' + product._id">
-                    <div class="product-image-container">
-                        <product-preview-image :product-id="product._id"  :alt="'Image of ' + product.name"></product-preview-image>
-                    </div>
-
-                    <div class="product-details-container">
-                        <div class="product-name">{{ product.name }}</div>
-                        <div class="product-price">{{ product.price }}€</div>
-                    </div>
-                </router-link>
-            </div>
+            <product-preview class="col-md-3" v-for="product in products" v-bind:key="product._id" :product="product"></product-preview>
         </div>
 
         <div v-else>
@@ -28,11 +17,11 @@
 <script>
 import get_category_by_id from '@/services/api/categories/get_by_id'
 import get_products_by_category from '@/services/api/products/get_by_category'
-import ProductPreviewImage from './ProductPreviewImage'
+import ProductPreview from './ProductPreview'
 
 export default {
     props: { id: { type: String, required: true } },
-    components: { ProductPreviewImage },
+    components: { ProductPreview },
 
     data: () => ({ category: null, products: [] }),
 
@@ -58,6 +47,7 @@ export default {
         cursor: pointer;
 
         .product-image-container {
+            overflow: hidden;
             height: 200px;
             img { width: 100% }
         }
