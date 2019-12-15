@@ -23,5 +23,12 @@
         padding-right: 1rem;
     }
 
-    .btn { text-transform: uppercase; }
+    .btn {
+        font-weight: 500;
+        letter-spacing: .15rem;
+        text-transform: uppercase;
+    }
+
+    .btn.btn-primary { background: darken($primary, 15%) !important }
+    .btn.btn-danger { background: darken($danger, 15%) !important }
 }
