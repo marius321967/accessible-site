@@ -4,11 +4,10 @@
             <!-- <img :src="logo" alt="The website logo" /> -->
             Logo
         </router-link>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+        
+        <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
-        <div class="collapse navbar-collapse primary-links" id="navbarSupportedContent">
+        <b-collapse id="nav-collapse" is-nav class="primary-links">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
                     <router-link class="nav-link" to="/">Home</router-link>
@@ -42,9 +41,9 @@
                     </router-link>
                 </li>
                 <li class="nav-item active" v-if="authProfile">
-                    <a href="#" class="nav-link">
+                    <router-link to="/profile" class="nav-link">
                         {{ authProfile.email }}
-                    </a>
+                    </router-link>
                 </li>
                 <li class="nav-item active" v-if="authToken">
                     <a href="#" class="nav-link" @click="logout">
@@ -68,7 +67,7 @@
                     </a>
                 </li>
             </ul>
-        </div>
+        </b-collapse>
     </nav>
 </template>
 
@@ -105,5 +104,9 @@ export default {
 <style>
 .navbar-brand img {
     max-height: 48px;
+}
+#navbarSupportedContent, #nav-collapse {
+    flex-wrap: wrap;
+    max-width: 100%;
 }
 </style>
