@@ -102,7 +102,8 @@ export default {
             create_order({
                 items: this.items,
                 details: this.form
-            });
+            })
+            .then(() => this.$router.push('/checkout-success'));
         },
 
         formError(message) {
