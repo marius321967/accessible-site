@@ -57,8 +57,8 @@ export default {
     margin-top: 1rem;
 }
 
-.router-link-active {
-    @extend .active;
-}
+// .router-link-active {
+//     @extend .active;
+// }
 
 </style>
