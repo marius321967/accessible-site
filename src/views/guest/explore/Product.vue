@@ -18,8 +18,8 @@
 
             <div class="col-md-6">
                 <div class="price-container">
-                    <div class="price-label">Price</div>
-                    <div class="price">{{ product.price }}€</div>
+                    <div class="price-label"><span>Price</span></div>
+                    <div class="price"><span>{{ product.price }}€</span></div>
                     
                 </div>
 
